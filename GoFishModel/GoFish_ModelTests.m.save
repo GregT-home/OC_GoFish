@@ -1,0 +1,43 @@
+//
+//  GoFish_ModelTests.m
+//  GoFish ModelTests
+//
+//  Created by Greg Tarsa on 1/23/14.
+//  Copyright (c) 2014 Greg Tarsa. All rights reserved.
+//
+
+#import <XCTest/XCTest.h>
+#import "Card.h"
+
+@interface GoFish_ModelTests : XCTestCase
+
+@end
+
+@implementation GoFish_ModelTests
+
+- (void)setUp
+{
+    [super setUp];
+    // Put setup code here. This method is called before the invocation of each test method in the class.
+}
+
+- (void)tearDown
+{
+    // Put teardown code here. This method is called after the invocation of each test method in the class.
+    [super tearDown];
+}
+
+- (void)testExample
+{
+  /*   XCTFail(@"No implementation for \"%s\"", __PRETTY_FUNCTION__);
+ */
+
+/* traditional:         PlayingCard *ace = [[PlayingCard alloc] initWithRank:@"A" suit:@"H"];*/
+/* Ken's preference     PlayingCard *ace = [PlayingCard newWithRank: rank:@"A" suit:@"H"]; */
+    /* in theory        PlayingCard *card =[PlayingCard new];  */
+    Card *ace = [Card newWithRank:@"A" suit:@"H"];
+    XCTAssertEqualObjects(ace.rank, @"A", @"Expected ace");
+    
+}
+
+@end
