@@ -1,0 +1,342 @@
+Programming languages like Objective-C are based around the idea of creating objects and then sending those objects messages to get back responses. It’s not like the real world where only people talk to each other, in Objective-C an object of any type can talk to all other objects equally (it’d be like if an iPhone suddenly started talking: not possible in the real world).
+
+I heard that.
+
+You see, in Objective-C we CAN make a talking phone, and the only way to do that is with a class. Let’s say we try to make a talking phone with just an NSDictionary, which at first you might think would be enough:
+
+NSDictionary *talkingiPhone = @{
+  @"Name": @"Mr. Higgie", 
+  @"ModelNumber": @1
+};
+This is a good start: our talkingiPhone object has a Name and a ModelNumber. But this is just data, just “properties” describing the phone. We could send a message to this object, but the only messages we have to choose from are defined by NSDictionary and have to do with dictionary-like operations. Our TalkingPhone should have a method like speak or beQuietNow. So, to do that we have to create a class. A class has a name, properties (like Name and ModelNumber above) and methods.
+
+Let’s start this journey and make our first class together.
+
+Lookup *talkingDroid = @{
+
+Person *person = [[Person alloc] init];
+person.firstName = @"Eric";
+
+Lookup *talkingiPhone = [[Lookup alloc] init];
+[talkingiPhone speak];
+
+-(void)speak;
+
+Coffee.h
+    @interface Coffee : NSObject
+    - (void) pour;
+    @end
+
+Coffee.m
+#import "Coffee.h"
+
+@implementation Coffee
+    - (void) pour;
+    {
+      NSLog(@"Pouring coffee");
+    }
+    @end
+
+Lookup *talkingiPhone = [[Lookup alloc] init];
+talkingiPhone.phoneName = @"Mr. Higgie";
+
+[talkingiPhone speak];
+
+Person.h
+@interface Person : NSObject
+@property NSString *firstName;
+@property NSString *lastName;
+
+- (NSString *)fullName;
+Here the fullName method has a return type defined in the parentheses as NSString *. Now all we have to do is update the method implementation and use the keyword return to tell the method to return a string:
+
+Person.m
+#import "Person.h"
+
+@implementation Person
+
+- (NSString *)fullName;
+{
+   return [NSString stringWithFormat:@"%@ %@", self.firstName, self.lastName];
+}
+@end
+You can return any type of object you want. For example, maybe you want a person’s first name and last name as an array instead of a string:
+
+Person.m
+#import "Person.h"
+
+@implementation Person
+
+- (NSArray *)names;
+{
+   return @[self.firstName, self.lastName];
+}
+@end
+For example, what if every time we sent a Lookup object the speak message, we could pass in a greeting string. That way we could alter the resulting string based on the argument passed in.
+
+To do this, we must first update the Lookup header and change the method declaration to take a single argument that is an NSString *:
+
+Lookup.h
+@interface Lookup : NSObject
+
+@property NSString *phoneName;
+@property NSString *modelNumber;
+
+-(NSString *)speak:(NSString *)greeting;
+@end
+All we had to do was add :(NSString *)greeting to the end of the declaration. We can break it down into three parts:
+
+The : means “what follows is an argument declaration”.
+The type of the argument in parentheses (NSString *)
+The argument name greeting
+To update the method implementation, just copy the method declaration in the header and voila, speak now takes an argument:
+
+Lookup.m
+#import "Lookup.h"
+
+@implementation Lookup
+-(NSString *)speak:(NSString *)greeting;
+{
+  NSString *message = [NSString stringWithFormat:@"%@ says %@", self.phoneName, greeting];
+  
+  return message;
+}
+@end
+We use the argument greeting in the method definition just like any other variable. With this method definition, we now have to send the speak: message with an argument:
+
+Lookup *talkingiPhone = [[Lookup alloc] init];
+talkingiPhone.phoneName = @"Mr. Higgie";
+[talkingiPhone speak:@"Hello There!"];
+When the method implementation is executed, the greeting variable is set to the string passed in. In the code above greeting would be set to @"Hello There".
+
+We’ve just committed a big Object-Oriented design mistake: we’re passing in information about the state of an object to one of it’s methods. It would be like if we had a fullName method on the Person class that took as arguments their firstName and lastName:
+
+Person.m
+#import "Person.h"
+
+@implementation Person
+- (NSString *)fullNameWithFirstName:(NSString *)firstName lastName:(NSString *)lastName;
+{
+  return [NSString stringWithFormat:@"%@ %@", firstName, lastName];
+}
+@end
+It’s much better to have properties for firstName and lastName so methods can access those properties using self:
+
+Person.m
+#import "Person.h"
+
+@implementation Person
+- (NSString *)fullName;
+{
+  return [NSString stringWithFormat:@"%@ %@", self.firstName, self.lastName];
+}
+@end
+We’ve started to fix this design mistake and added the batteryLife property to Lookup.
+
+-------
+Lookup.m
+#import "Lookup.h"
+
+@implementation Lookup
+
+- (void) decreaseBatteryLife: (NSNumber *) amt;
+{
+  self.batteryLife = @([self.batteryLife intValue] - [num intValue]);
+}
+
+- (void) reportBatteryLife;
+{
+    NSLog(@"Battery life is %@", self.batteryLife);
+}
+
+- (NSString *)speak:(NSString *)greeting;
+{
+    NSString *message = [NSString stringWithFormat:@"%@ says %@", self.phoneName, greeting];
+    return message;
+}
+@end
+
+----- Lookup.h
+@interface Lookup : NSObject
+
+@property NSString *phoneName;
+@property NSString *modelNumber;
+@property NSNumber *batteryLife;
+
+- (void) decreaseBatteryLife: (NSNumber *) amt;
+- (NSString *) speak:(NSString *)greeting;
+- (void) reportBatteryLife;
+
+@end
+
+------ Usage
+Lookup *talkingiPhone = [[Lookup alloc] init];
+talkingiPhone.phoneName = @"Mr. Higgie";
+
+[talkingiPhone decreaseBatteryLife:@5];
+[talkingiPhone reportBatteryLife];
+
+------------------------
+What if we wanted to hide the batteryLife property even further and not even let outside code read the property. Then the only way to know the battery life would be to send the reportBatteryLife message. To accomplish this, we’d have to get rid of the batteryLife property and replace it with a completely internal variable.
+
+To learn how, let’s first look at this Coffee class that has a temperature property:
+
+Coffee.h
+@interface Coffee : NSObject
+@property NSNumber *temperature;
+@end
+To replace the temperature property with a variable only available to methods of the Coffee class, we have to remove the property and replace it with an instance variable:
+
+Coffee.h
+@interface Coffee : NSObject {
+  NSNumber *_temperature;
+}        
+@end
+Instance variables go in an optional curly-brace block after the @interface declaration, and are defined like any other variable. We kept the naming convention for internal variables by using _temperature. Now methods on the Coffee class can access this new variable:
+
+Coffee.m
+#import "Coffee.h"
+
+@implementation Coffee
+- (void)pour;
+{
+  if([_temperature intValue] < 155){
+    NSLog(@"Oh no! The coffee is cold!");
+  } else {
+    NSLog(@"Mmmm, delicious warm coffee");
+  }
+}
+@end
+
+---------------------------
+Final Lookup.h
+
+@interface Lookup : NSObject {
+  	NSNumber *_batteryLife;  /* example of instance variable */
+}
+
+@property NSString *phoneName;
+@property NSString *modelNumber;
+
+- (void) decreaseBatteryLife:(NSNumber *)arg;
+- (NSString *) speak:(NSString *)greeting;
+- (void) reportBatteryLife;
+@end
+
+---------------------------
+Final Lookup.m
+#import "Lookup.h"
+
+@implementation Lookup
+
+- (Lookup *)init;
+{
+  _batteryLife = @100;
+  return [super init];
+}
+
+- (void) decreaseBatteryLife:(NSNumber *)arg;
+{
+  _batteryLife = @([_batteryLife intValue] - [arg intValue]);
+}
+
+- (void) reportBatteryLife;
+{
+    NSLog(@"Battery life is %@", _batteryLife);
+}
+
+- (NSString *)speak:(NSString *)greeting;
+{
+    NSString *message = [NSString stringWithFormat:@"%@ says %@", self.phoneName, greeting];
+    return message;
+}
+@end
+
+------------------------
+Final Example use
+
+#import "Lookup.h"
+
+Lookup *talkingiPhone = [[Lookup alloc] init];
+talkingiPhone.phoneName = @"Mr. Higgie";
+
+[talkingiPhone decreaseBatteryLife:@5];
+[talkingiPhone reportBatteryLife];
+
+=================================
+if([talkingiPhone respondsToSelector:@selector(decreaseBatteryLife:)]){
+  NSLog(@"Yup, talkingiPhone responds to the decreaseBatteryLife: message");
+}
+
+if([talkingiPhone respondsToSelector:@selector(thisMessageDoesNotExist)]){
+  NSLog(@"Yup, talkingiPhone responds to the thisMessageDoesNotExist message");
+}else{
+  NSLog(@"Nope, talkingiPhone DOES NOT respond to the thisMessageDoesNotExist message");
+}
+
+
+You can “tag” an object with the expectation that it responds to all the required messages in a protocol. For example, when creating a new Person object:
+
+Person <NSCopying> *person = [[Person alloc] init];
+Person *copy = [person copy];
+If the Person class does not adopt the NSCopying protocol, the compiler will complain about this code and not allow you to continue. Now the only way to fix the compiler error would be to have the Person class adopt the NSCopying protocol, like so:
+
+Person.h
+@interface Person : NSObject <NSCopying>
+@end
+By adopting the NSCopying protocol, the Person class must implement the copyWithZone: method or the compiler will complain.
+
+----
+Copying an object isn’t complicated at all - it starts with just creating a brand new object. The one difference with the copyWithZone: method is to make sure to allocate our new object in the zone of memory provided by the NSZone argument. To see how we can accomplish this, let’s see how we would implement a copyWithZone: method on a Person class:
+
+Person.m
+@implementation Person
+- (Person *) copyWithZone:(NSZone *)zone;
+{
+    Person *personCopy = [[Person allocWithZone:zone] init];
+    return personCopy;
+}
+@end
+Notice how the allocWithZone: message has replaced the normal alloc message that we usually send when creating new objects. allocWithZone: does that same thing as alloc, but it will allocate memory for the object in a certain zone of memory. This is done for performance reasons, as allocating similar objects in the same zone of memory ensures accessing those objects in memory is as fast as possible.
+
+------
+Imagine we add a method called setBatteryLife: and then use it inside the copyWithZone: method:
+
+Lookup.m
+- (Lookup *) copyWithZone:(NSZone *)zone;
+{
+   Lookup *copy = [[Lookup allocWithZone:zone] init];
+   copy.phoneName = [NSString stringWithFormat:@"Copy of %@", self.phoneName];
+   [copy setBatteryLife:_batteryLife];
+   return copy;
+}
+Now there is nothing stopping outside code from mucking around with _batteryLife once the copy has been made:
+
+Lookup *copy = [talkingiPhone copy];
+[copy setBatteryLife:@10000];
+Instead of adding a method that can be called at any time, we can add a custom initializer method that can only be called when a Lookup object is created. A custom initializer method is defined just like the init method, and its name should start with init. For example, we could add a custom initializer to Person that accepts arguments for the first and last name:
+
+Person.h
+@interface Person : NSOBject
+- (Person *) initWithFirstName:(NSString *)firstName 
+                      lastName:(NSString *)lastName;
+                      
+@property NSString *firstName;
+@property NSString *lastName;
+@end
+Person.m
+@implementation Person
+- (Person *) initWithFirstName:(NSString *)firstName 
+                      lastName:(NSString *)lastName;
+{
+   _firstName = firstName;
+   _lastName = lastName;
+   return [super init];
+}
+@end
+Now you can initialize a Person and set their first and last name at the same time:
+
+Person *person = [[Person alloc] initWithFirstName:@"Tim" 
+                                          lastName:@"Cook"];
+
+
