@@ -1,0 +1,33 @@
+1/24/14 -------------
+Protocols
+
+Define the signatures for methods that MUST be implemented for a class 
+
+#import "Card.h"
+#import "Rank.h"
+longName:
+
+Rank.h
+@protocol Rank <NSObject>
+- (NSString *)longName;
+- (NSString *)abbrev;
+@end
+
+// defines the methods that any subclass MUST implement
+
+myRank.h
+#import "Card.h"
+#import "Rank.h"
+
+@interface RMSRank : NSO
+
+myRank.m
+#import "RMSRank.h"
+
+@implementation RMSRank
+// Warning: longName not implemented yet.
+- (NSSTring *)longname {
+return @"long name";
+}
+@end
+

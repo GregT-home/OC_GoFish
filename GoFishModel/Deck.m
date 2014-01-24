@@ -31,45 +31,52 @@
 }
 
 - (void)createCards {
-// below is shorthand equiv for:    [self setCards:[NSMutableArray new]];
+    // below is shorthand equiv for:    [self setCards:[NSMutableArray new]];
     self.cards = [NSMutableArray new];
-    for (NSString *rank in [Deck ranks]) {
-        for (NSString *suit in [Deck suits]) {
+    for (NSString *rank in RANKS) {
+        for (NSString *suit in SUITS) {
             [self.cards addObject:[Card newWithRank:rank suit:suit]];
         }
     }
 }
 
-- (NSUInteger)count {
-    return [self.cards count];
+- (NSNumber *)numberOfCards   {
+    return @([self.cards count]);
 }
 
-- (instancetype)shuffle {
-    // how to shuffle?
-    // check out: http://stackoverflow.com/questions/56648/whats-the-best-way-to-shuffle-an-nsmutablearray
-    return nil;
-}
-- (Card *)give_card {
-    // how to pop from a NSMutableArray?
-    // check NSMutableArray Class Reference for this and for unshifting
-    // another reference: http://saturnboy.com/2011/02/stack-queue-nsmutablearray/
-    return nil;
-
-}
-- (Card *)receive_card:(Card *)newcard {
-    // how to unshift from a NSMutableArray?
-    return nil;
+- (BOOL)isEqual:(Deck *)aDeck {
+    __block BOOL result;
+    [self.cards enumerateObjectsUsingBlock:^(Card *card, NSUInteger i, BOOL *stopearly) {
+        result = [card isEqual:[aDeck.cards objectAtIndex:i]];
+        if (!result)
+            *stopearly = YES;
+    }];
+    return result;
 }
 
-
-// make this an enum (or maybe a dictionary?)
-+ (NSArray *)ranks {
-    return RANKS;
+- (void)shuffle {
+    {
+        NSUInteger count = [[self numberOfCards] intValue];
+        for (NSUInteger i = 0; i < count; ++i) {
+            // Select a random element between i and end of array to swap with.
+            NSInteger nElements = count - i;
+            NSInteger n = arc4random_uniform(nElements) + i;
+            [self.cards exchangeObjectAtIndex:i withObjectAtIndex:n];
+        }
     }
-
-+ (NSArray *)suits {
-    return [@"C D S H" componentsSeparatedByString:@" "];
 }
 
+- (Card *)give_card {
+/*    Card * card = [self.cards lastObject];
+    [self.cards removeLastObject]; 
+ */
+    Card *card = [self.cards firstObject];
+    [self.cards removeObjectAtIndex:0];
+    return card;
+}
+
+- (void)receive_card:(Card *)newcard {
+    [self.cards insertObject:newcard atIndex:[self.cards count] - 1];
+}
 
 @end
