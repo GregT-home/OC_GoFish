@@ -14,10 +14,12 @@
 		5E9B6B281891CC3700E52A9F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9B6B271891CC3700E52A9F /* UIKit.framework */; };
 		5E9B6B2B1891CC3700E52A9F /* libGoFishModel.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9B6B131891CC3600E52A9F /* libGoFishModel.a */; };
 		5E9B6B311891CC3700E52A9F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5E9B6B2F1891CC3700E52A9F /* InfoPlist.strings */; };
-		5E9B6B3D1891CCB300E52A9F /* GoFishModelTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E9B6B3C1891CCB300E52A9F /* GoFishModelTests.m */; };
+		5E9B6B3D1891CCB300E52A9F /* CardTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E9B6B3C1891CCB300E52A9F /* CardTests.m */; };
 		5E9B6B401891CCC700E52A9F /* GoFishModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E9B6B3E1891CCC700E52A9F /* GoFishModel.m */; };
 		5E9B6B451891CCF000E52A9F /* Deck.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E9B6B411891CCF000E52A9F /* Deck.m */; };
 		5E9B6B461891CCF000E52A9F /* Card.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E9B6B431891CCF000E52A9F /* Card.m */; };
+		5E9B6B4D18921C7A00E52A9F /* DeckTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E9B6B4B18921C7A00E52A9F /* DeckTests.m */; };
+		5E9B6B4E18921C7A00E52A9F /* GameTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E9B6B4C18921C7A00E52A9F /* GameTests.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,13 +53,15 @@
 		5E9B6B271891CC3700E52A9F /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		5E9B6B2E1891CC3700E52A9F /* GoFishModelTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoFishModelTests-Info.plist"; sourceTree = "<group>"; };
 		5E9B6B301891CC3700E52A9F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		5E9B6B3C1891CCB300E52A9F /* GoFishModelTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoFishModelTests.m; sourceTree = "<group>"; };
+		5E9B6B3C1891CCB300E52A9F /* CardTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardTests.m; sourceTree = "<group>"; };
 		5E9B6B3E1891CCC700E52A9F /* GoFishModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoFishModel.m; sourceTree = "<group>"; };
 		5E9B6B3F1891CCC700E52A9F /* GoFishModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoFishModel.h; sourceTree = "<group>"; };
 		5E9B6B411891CCF000E52A9F /* Deck.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Deck.m; sourceTree = "<group>"; };
 		5E9B6B421891CCF000E52A9F /* Deck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Deck.h; sourceTree = "<group>"; };
 		5E9B6B431891CCF000E52A9F /* Card.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Card.m; sourceTree = "<group>"; };
 		5E9B6B441891CCF000E52A9F /* Card.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Card.h; sourceTree = "<group>"; };
+		5E9B6B4B18921C7A00E52A9F /* DeckTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeckTests.m; sourceTree = "<group>"; };
+		5E9B6B4C18921C7A00E52A9F /* GameTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameTests.m; sourceTree = "<group>"; };
 		9A01B5F725B74FF18FEE30CC /* libPods-GoFishModelTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-GoFishModelTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBF65951A4AB4E78887F97C1 /* Pods-GoFishModelTests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GoFishModelTests.xcconfig"; path = "Pods/Pods-GoFishModelTests.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -142,7 +146,9 @@
 		5E9B6B2C1891CC3700E52A9F /* GoFishModelTests */ = {
 			isa = PBXGroup;
 			children = (
-				5E9B6B3C1891CCB300E52A9F /* GoFishModelTests.m */,
+				5E9B6B4B18921C7A00E52A9F /* DeckTests.m */,
+				5E9B6B4C18921C7A00E52A9F /* GameTests.m */,
+				5E9B6B3C1891CCB300E52A9F /* CardTests.m */,
 				5E9B6B2D1891CC3700E52A9F /* Supporting Files */,
 			);
 			path = GoFishModelTests;
@@ -283,7 +289,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5E9B6B3D1891CCB300E52A9F /* GoFishModelTests.m in Sources */,
+				5E9B6B4D18921C7A00E52A9F /* DeckTests.m in Sources */,
+				5E9B6B4E18921C7A00E52A9F /* GameTests.m in Sources */,
+				5E9B6B3D1891CCB300E52A9F /* CardTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -7,15 +7,15 @@
 //
 
 #import <Foundation/Foundation.h>
+#define RANKS [@"2 3 4 5 6 7 8 9 10 J Q K A" componentsSeparatedByString:@" "]
+#define SUITS [@"C D H S" componentsSeparatedByString:@" "]
 
 @interface Card : NSObject
 @property NSString *rank;
 @property NSString *suit;
 
-+ (id)newWithRank:(NSString *)rank suit:(NSString *)suit;
++ (instancetype)newWithRank:(NSString *)rank suit:(NSString *)suit;
 - (instancetype)initWithRank:(NSString *)rank suit:(NSString *)suit;
-
-/* from Christian's code*/
-/* +(instancetype)newWithRank */
+- (NSComparisonResult)compare:(Card *)aCard;
 
 @end

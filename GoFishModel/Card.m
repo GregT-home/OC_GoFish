@@ -4,14 +4,17 @@
 //
 //  Created by Greg Tarsa on 1/23/14.
 //  Copyright (c) 2014 Greg Tarsa. All rights reserved.
-//
+//º
 
 #import "Card.h"
 
+
 @implementation Card
+
 + (instancetype)newWithRank:(NSString *)rank suit:(NSString *)suit  {
     return [[self alloc] initWithRank:rank suit:suit];
     }
+
 - (instancetype)initWithRank:(NSString *)rank suit:(NSString *)suit {
     self = [super init];
     if(self) {
@@ -21,4 +24,18 @@
     return self;
 }
 
+-(NSNumber *)value {
+    NSNumber *v =@([RANKS indexOfObject:self.rank]);
+   return v;
+   // return [[NSNumber numberWithUnsignedInteger:[RANKS indexOfObject:self.rank]]]
+}
+
+- (BOOL)isEqual:(id)object {
+    return [[self value] isEqual:[object value]];
+}
+
+- (NSComparisonResult)compare:(Card *)aCard {
+    //return [self.rank compare:aCard.rank];
+    return [[self value] compare:[aCard value]];
+  }
 @end
