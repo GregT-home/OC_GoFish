@@ -7,24 +7,24 @@
 //
 
 #import "Kiwi.h"
-#import "Card.h"
+#import "FishCard.h"
 
-SPEC_BEGIN(CardTests)
+SPEC_BEGIN(FishCardTests)
 
 describe(@"GoFish Model", ^{
     context(@"Create a number of sample cards from NSString rank/suit names", ^{
-        __block Card *fiveHearts, *fiveHearts2, *fiveClubs, *ace, *two;
+        __block FishCard *fiveHearts, *fiveHearts2, *fiveClubs, *ace, *two;
         
         beforeEach(^{ // Occurs before each enclosed "it"
-            fiveHearts = [Card newWithRank:@"5" suit:@"H"];
-            fiveHearts2 =[Card newWithRank:@"5" suit:@"H"];
-            fiveClubs = [Card newWithRank:@"5" suit:@"C"];
-            ace = [Card newWithRank:@"A" suit:@"C"];
-            two = [Card newWithRank:@"2" suit:@"C"];
+            fiveHearts = [FishCard newWithRank:@"5" suit:@"H"];
+            fiveHearts2 =[FishCard newWithRank:@"5" suit:@"H"];
+            fiveClubs = [FishCard newWithRank:@"5" suit:@"C"];
+            ace = [FishCard newWithRank:@"A" suit:@"C"];
+            two = [FishCard newWithRank:@"2" suit:@"C"];
         });
         
         it(@"creates new cards from NSString values", ^{
-            [[fiveHearts should] beKindOfClass:[Card class]];
+            [[fiveHearts should] beKindOfClass:[FishCard class]];
         });
         
         it(@"should have a rank", ^{

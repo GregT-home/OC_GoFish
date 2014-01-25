@@ -1,5 +1,5 @@
 //
-//  Deck.h
+//  FishDeck.h
 //  GoFishModel
 //
 //  Created by Greg Tarsa on 1/23/14.
@@ -7,14 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Card.h"
+#import "FishCard.h"
 
-@interface Deck : NSObject
+@interface FishDeck : NSObject
 + (instancetype)newWithCards;
 - (instancetype)initWithCards;
 - (NSNumber *)numberOfCards;
 - (void)shuffle;
-- (Card *)give_card;
-- (void)receive_card:(Card *)newcard;
+- (FishCard *)give_card;
+- (void)receive_card:(FishCard *)newcard;
 
 @end

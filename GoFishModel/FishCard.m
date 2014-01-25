@@ -1,15 +1,15 @@
 //
-//  Card.m
+//  FishCard.m
 //  GoFish Model
 //
 //  Created by Greg Tarsa on 1/23/14.
 //  Copyright (c) 2014 Greg Tarsa. All rights reserved.
 //º
 
-#import "Card.h"
+#import "FishCard.h"
 
 
-@implementation Card
+@implementation FishCard
 
 + (instancetype)newWithRank:(NSString *)rank suit:(NSString *)suit  {
     return [[self alloc] initWithRank:rank suit:suit];
@@ -34,7 +34,7 @@
     return [[self value] isEqual:[object value]];
 }
 
-- (NSComparisonResult)compare:(Card *)aCard {
+- (NSComparisonResult)compare:(FishCard *)aCard {
     //return [self.rank compare:aCard.rank];
     return [[self value] compare:[aCard value]];
   }

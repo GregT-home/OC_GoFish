@@ -1,5 +1,5 @@
 //
-//  Card.h
+//  FishCard.h
 //  GoFish Model
 //
 //  Created by Greg Tarsa on 1/23/14.
@@ -10,12 +10,12 @@
 #define RANKS [@"2 3 4 5 6 7 8 9 10 J Q K A" componentsSeparatedByString:@" "]
 #define SUITS [@"C D H S" componentsSeparatedByString:@" "]
 
-@interface Card : NSObject
+@interface FishCard : NSObject
 @property NSString *rank;
 @property NSString *suit;
 
 + (instancetype)newWithRank:(NSString *)rank suit:(NSString *)suit;
 - (instancetype)initWithRank:(NSString *)rank suit:(NSString *)suit;
-- (NSComparisonResult)compare:(Card *)aCard;
+- (NSComparisonResult)compare:(FishCard *)aCard;
 
 @end

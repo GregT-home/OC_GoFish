@@ -1,22 +1,22 @@
 //
-//  Deck.m
+//  FishDeck.m
 //  GoFishModel
 //
 //  Created by Greg Tarsa on 1/23/14.
 //  Copyright (c) 2014 Greg Tarsa. All rights reserved.
 //
 
-#import "Deck.h"
-#import "Card.h"
+#import "FishDeck.h"
+#import "FishCard.h"
 
-@interface Deck()
+@interface FishDeck()
 // declare a Cards property so that they are not visible
 // similar to an instance variable in Ruby
 @property (nonatomic, strong) NSMutableArray *cards;
 @end
 
 
-@implementation Deck
+@implementation FishDeck
 + (instancetype)newWithCards {
     return[[self alloc] initWithCards];
 }
@@ -35,7 +35,7 @@
     self.cards = [NSMutableArray new];
     for (NSString *rank in RANKS) {
         for (NSString *suit in SUITS) {
-            [self.cards addObject:[Card newWithRank:rank suit:suit]];
+            [self.cards addObject:[FishCard newWithRank:rank suit:suit]];
         }
     }
 }
@@ -44,9 +44,9 @@
     return @([self.cards count]);
 }
 
-- (BOOL)isEqual:(Deck *)aDeck {
+- (BOOL)isEqual:(FishDeck *)aDeck {
     __block BOOL result;
-    [self.cards enumerateObjectsUsingBlock:^(Card *card, NSUInteger i, BOOL *stopearly) {
+    [self.cards enumerateObjectsUsingBlock:^(FishCard *card, NSUInteger i, BOOL *stopearly) {
         result = [card isEqual:[aDeck.cards objectAtIndex:i]];
         if (!result)
             *stopearly = YES;
@@ -66,16 +66,13 @@
     }
 }
 
-- (Card *)give_card {
-/*    Card * card = [self.cards lastObject];
-    [self.cards removeLastObject]; 
- */
-    Card *card = [self.cards firstObject];
+- (FishCard *)give_card {
+    FishCard *card = [self.cards firstObject];
     [self.cards removeObjectAtIndex:0];
     return card;
 }
 
-- (void)receive_card:(Card *)newcard {
+- (void)receive_card:(FishCard *)newcard {
     [self.cards insertObject:newcard atIndex:[self.cards count] - 1];
 }
 

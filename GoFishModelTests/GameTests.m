@@ -7,20 +7,20 @@
 //
 
 #import "Kiwi.h"
-#import "Card.h"
-#import "Deck.h"
+#import "FishCard.h"
+#import "FishDeck.h"
 //#import "Game.h"
 
 SPEC_BEGIN(GameTests)
 
 describe(@"GoFish Model: Game tests", ^{
-    __block Card *fiveHearts, *fiveClubs, *ace, *two;
+    __block FishCard *fiveHearts, *fiveClubs, *ace, *two;
     
     beforeEach(^{ // Occurs before each enclosed "it"
-        fiveHearts = [Card newWithRank:@"5" suit:@"H"];
-        fiveClubs = [Card newWithRank:@"5" suit:@"C"];
-        ace = [Card newWithRank:@"A" suit:@"C"];
-        two = [Card newWithRank:@"2" suit:@"C"];
+        fiveHearts = [FishCard newWithRank:@"5" suit:@"H"];
+        fiveClubs = [FishCard newWithRank:@"5" suit:@"C"];
+        ace = [FishCard newWithRank:@"A" suit:@"C"];
+        two = [FishCard newWithRank:@"2" suit:@"C"];
     });
 /* What is the right format for this class check?
  it(@"creates new cards from NSString values", ^{
