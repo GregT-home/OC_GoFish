@@ -8,7 +8,7 @@
 
 #import "FishCard.h"
 
-
+//    NSString *result = [NSString stringWithFormat:@"[%@]", [_cards componentsJoinedByString:@" "]];
 @implementation FishCard
 
 + (instancetype)newWithRank:(NSString *)rank suit:(NSString *)suit  {
@@ -30,12 +30,17 @@
    // return [[NSNumber numberWithUnsignedInteger:[RANKS indexOfObject:self.rank]]]
 }
 
+-(NSString *) toString {
+    return [NSString stringWithFormat:@"%@-%@", self.rank, self.suit];
+}
+
 - (BOOL)isEqual:(id)object {
     return [[self value] isEqual:[object value]];
 }
 
 - (NSComparisonResult)compare:(FishCard *)aCard {
-    //return [self.rank compare:aCard.rank];
-    return [[self value] compare:[aCard value]];
+    NSNumber *val1 = [self value];
+    NSNumber *val2 = [aCard value];
+    return [val1 compare:val2];
   }
 @end

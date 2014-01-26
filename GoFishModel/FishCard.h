@@ -14,8 +14,9 @@
 @property NSString *rank;
 @property NSString *suit;
 
-+ (instancetype)newWithRank:(NSString *)rank suit:(NSString *)suit;
-- (instancetype)initWithRank:(NSString *)rank suit:(NSString *)suit;
-- (NSComparisonResult)compare:(FishCard *)aCard;
++ (instancetype) newWithRank:(NSString *)rank suit:(NSString *)suit;
+- (instancetype) initWithRank:(NSString *)rank suit:(NSString *)suit;
+- (NSComparisonResult) compare:(FishCard *)aCard;
+- (NSString *) toString;
 
 @end

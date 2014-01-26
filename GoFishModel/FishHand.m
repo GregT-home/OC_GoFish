@@ -44,11 +44,20 @@
 }
 
 - (NSNumber *)rankCount:(NSString *)targetRank {
-    NSLog(@"In rankCount(%@)", targetRank);
+    int matches = 0;
     
+    for (FishCard *card in _cards) {
+        if ([card.rank compare:targetRank] == NSOrderedSame) matches++;
+    }
+    return @(matches);
+    
+    /*
     NSPredicate *target = [NSPredicate predicateWithFormat:@"SELF == %@", targetRank];
     
-    return @([[[_cards filteredArrayUsingPredicate:target] mutableCopy] count]);
+    NSArray *array = [_cards filteredArrayUsingPredicate:target];
+    
+    return @([array count]);
+     */
 }
 
 - (BOOL) gotBook:(NSString *)rank {
@@ -59,18 +68,36 @@
     [_cards addObjectsFromArray:newCards];
 }
     
-- (NSMutableArray *)giveMatchingCards:(NSString *)rank {
+- (NSMutableArray *)giveMatchingCards:(NSString *)targetRank {
+    
+    NSLog(@"In giveMatchingCards(%@)", targetRank);
+    NSMutableArray *matchingCards = [NSMutableArray new];
+    int matches = 0;
+    
+    for (FishCard *card in _cards) {
+        NSLog(@"card.rank = %@ and targetRank = %@", card.rank, targetRank);
+        if ([card.rank compare:targetRank] == NSOrderedSame){
+            [matchingCards addObject:card];
+            matches++;
+        }
+    }
+    NSLog(@"found %@", @(matches));
+    [self removeThisRank:targetRank];
+
+    return matchingCards;
+
+    /*
     NSPredicate *target = [NSPredicate predicateWithFormat:@"SELF == %@", rank];
     NSMutableArray *matches = [[_cards filteredArrayUsingPredicate:target] mutableCopy];
     [self removeThisRank:rank];
     return matches;
+     */
 }
 
 - (void) sort {
     [_cards sortUsingComparator: ^NSComparisonResult(id obj1, id obj2) {
         return [(FishCard *)obj1 compare: (FishCard *)obj2];
     }];
-    
 }
 
 - (void)removeThisRank:(NSMutableArray *)rank{
@@ -79,8 +106,14 @@
 }
 
 - (NSString *) toString {
-    NSLog(@"???????????????? hand to string: %@", self);
-    return nil;
+    NSMutableString *result = [@"[" mutableCopy];
     
+    for (FishCard *card in _cards) {
+        [result appendString: [card toString]];
+        [result appendString:@" "];
+    }
+    [result replaceCharactersInRange: NSMakeRange([result length] - 1, 1) withString:@"]"];
+    
+    return [NSString stringWithString:result];
 }
 @end

@@ -18,38 +18,45 @@ describe(@"GoFish Model", ^{
         beforeEach(^{ // Occurs before each enclosed "it"
             fiveHearts = [FishCard newWithRank:@"5" suit:@"H"];
             fiveHearts2 =[FishCard newWithRank:@"5" suit:@"H"];
-            fiveClubs = [FishCard newWithRank:@"5" suit:@"C"];
-            ace = [FishCard newWithRank:@"A" suit:@"C"];
-            two = [FishCard newWithRank:@"2" suit:@"C"];
         });
         
-        it(@"creates new cards from NSString values", ^{
+        it(@"newWithRank creates new cards from NSString values", ^{
             [[fiveHearts should] beKindOfClass:[FishCard class]];
         });
         
-        it(@"should have a rank", ^{
+        it(@"they have a rank", ^{
             [[fiveHearts.rank should] equal:@"5"];
-            if([fiveHearts isEqual:fiveHearts2])
-                NSLog(@"================== 5H = 5H(2) =============");
-            else
-                NSLog(@"------------------ 5H != 5H(2)-------------");
         });
-        it(@"should have a suit", ^{
+        
+        it(@"they have a suit", ^{
             [[fiveHearts.suit should] equal:@"H"];
         });
-        it(@"similar cards with same rank.suit ranks should be equal", ^{
+        
+        it(@"similar cards with same rank.suit ranks are equal", ^{
             [[fiveHearts should] equal:fiveHearts2];
         });
-        it(@"equal ranks should be equal", ^{
+        
+        it(@"equal ranks are equal regrdless of suit", ^{
+            fiveClubs = [FishCard newWithRank:@"5" suit:@"C"];
             [[fiveHearts should] equal:fiveClubs];
         });
-        it(@"higher rank should be greater than lower rank", ^{
-            [[ace should] beGreaterThan:fiveHearts];
-        });
-        it(@"lower rank should be less than higher rank", ^{
+        
+        it(@"higher rank are greater than lower rank", ^{
+            ace = [FishCard newWithRank:@"A" suit:@"C"];
             [[fiveHearts should] beLessThan:ace];
         });
+        
+        it(@"lower rank are less than higher rank", ^{
+            two = [FishCard newWithRank:@"2" suit:@"C"];
+            [[fiveHearts should] beGreaterThan:two];
+        });
+        
+        it(@"toString: returns a string representation of the card", ^{
+            NSString *string = [fiveHearts toString];
+            [[string should] equal:@"5-H"];
+        });
     }); // end context with sample cards
+    
 });
 
 SPEC_END
