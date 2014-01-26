@@ -9,10 +9,13 @@
 #import <Foundation/Foundation.h>
 
 @interface FishHand : NSObject
++ (instancetype) newWithEmptyHand;
++ (instancetype) newWithStackedCards:(NSMutableArray *)stackedHandCards;
+- (NSNumber *) numberOfCards;
+- (NSNumber *) rankCount:(NSString *)targetRank;
 - (void) receiveCards:(NSMutableArray *)cards;
 - (NSMutableArray *) giveMatchingCards:(NSString *)rank;
 - (BOOL) gotBook:(NSString *)rank;
-- (NSNumber *) numberOfCards;
-- (NSString *) toS;
+- (NSString *) toString;
 - (void) sort;
 @end

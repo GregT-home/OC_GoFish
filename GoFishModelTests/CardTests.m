@@ -29,6 +29,10 @@ describe(@"GoFish Model", ^{
         
         it(@"should have a rank", ^{
             [[fiveHearts.rank should] equal:@"5"];
+            if([fiveHearts isEqual:fiveHearts2])
+                NSLog(@"================== 5H = 5H(2) =============");
+            else
+                NSLog(@"------------------ 5H != 5H(2)-------------");
         });
         it(@"should have a suit", ^{
             [[fiveHearts.suit should] equal:@"H"];

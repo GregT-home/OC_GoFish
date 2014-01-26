@@ -13,29 +13,30 @@
 SPEC_BEGIN(DeckTests)
 
 describe(@"GoFish Model: Deck Class Creation and Basic Function", ^{
+    it(@"creates new cards from NSString values", ^{
+        FishDeck *deck = [FishDeck newWithCards];
+        [[deck should] beKindOfClass:[FishDeck class]];
+    });
+    
+    it(@"creates new deck with 52 cards", ^{
+        FishDeck *deck = [FishDeck newWithCards];
+        [[deck.numberOfCards should] equal:@52];
+    });
+    
     context(@"Create a number of sample cards from NSString rank/suit names", ^{
         __block FishDeck *deck, *shuffledDeck;
         
         beforeEach(^{ // Occurs before each enclosed "it"
             deck = [FishDeck newWithCards];
-        });
-        
-        it(@"creates new cards from NSString values", ^{
-            [[deck should] beKindOfClass:[FishDeck class]];
-        });
-        
-        it(@"creates new deck with 52 cards", ^{
-            [[deck.numberOfCards should] equal:@52];
-        });
+            shuffledDeck = [FishDeck newWithCards];
+       });
         
         it(@"new decks have cards in the same order", ^{
-            shuffledDeck = [FishDeck newWithCards];
             [[deck should] equal:shuffledDeck];
         });
         
         it(@"shuffling should change the order", ^{
-            shuffledDeck = [FishDeck newWithCards];
-            [shuffledDeck shuffle];
+            [deck shuffle];
             [[deck shouldNot] equal:shuffledDeck];
         });
 
