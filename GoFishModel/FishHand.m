@@ -25,7 +25,7 @@
 - (instancetype)initWithEmptyHand {
     self = [super init];
     if (self)
-        _cards = [NSMutableArray new];
+        self.cards = [NSMutableArray new];
     return self;
 }
 + (instancetype)newWithEmptyHand {
@@ -33,30 +33,30 @@
 }
 
 + (instancetype)newWithStackedCards:(NSMutableArray *)stackedHandCards {
-//    self = [[self alloc] newWithEmptyHand];
-  //  [self.cards addObjectsFromArray:stackedHandCards];
+    //    self = [[self alloc] newWithEmptyHand];
+    //  [self.cards addObjectsFromArray:stackedHandCards];
     //return self;
     return nil;
 }
 
 - (NSNumber *)numberOfCards {
-    return @([_cards count]);
+    return @([self.cards count]);
 }
 
 - (NSNumber *)rankCount:(NSString *)targetRank {
     int matches = 0;
     
-    for (FishCard *card in _cards) {
+    for (FishCard *card in self.cards) {
         if ([card.rank compare:targetRank] == NSOrderedSame) matches++;
     }
     return @(matches);
     
     /*
-    NSPredicate *target = [NSPredicate predicateWithFormat:@"SELF == %@", targetRank];
-    
-    NSArray *array = [_cards filteredArrayUsingPredicate:target];
-    
-    return @([array count]);
+     NSPredicate *target = [NSPredicate predicateWithFormat:@"SELF == %@", targetRank];
+     
+     NSArray *array = [self.cards filteredArrayUsingPredicate:target];
+     
+     return @([array count]);
      */
 }
 
@@ -65,50 +65,44 @@
 }
 
 - (void)receiveCards:(NSMutableArray *)newCards{
-    [_cards addObjectsFromArray:newCards];
+    [self.cards addObjectsFromArray:newCards];
 }
-    
+
 - (NSMutableArray *)giveMatchingCards:(NSString *)targetRank {
-    
-    NSLog(@"In giveMatchingCards(%@)", targetRank);
     NSMutableArray *matchingCards = [NSMutableArray new];
     int matches = 0;
     
-    for (FishCard *card in _cards) {
-        NSLog(@"card.rank = %@ and targetRank = %@", card.rank, targetRank);
+    for (FishCard *card in self.cards) {
         if ([card.rank compare:targetRank] == NSOrderedSame){
             [matchingCards addObject:card];
             matches++;
         }
     }
-    NSLog(@"found %@", @(matches));
     [self removeThisRank:targetRank];
-
     return matchingCards;
-
-    /*
-    NSPredicate *target = [NSPredicate predicateWithFormat:@"SELF == %@", rank];
-    NSMutableArray *matches = [[_cards filteredArrayUsingPredicate:target] mutableCopy];
-    [self removeThisRank:rank];
-    return matches;
-     */
 }
 
 - (void) sort {
-    [_cards sortUsingComparator: ^NSComparisonResult(id obj1, id obj2) {
+    [self.cards sortUsingComparator: ^NSComparisonResult(id obj1, id obj2) {
         return [(FishCard *)obj1 compare: (FishCard *)obj2];
     }];
 }
 
-- (void)removeThisRank:(NSMutableArray *)rank{
-    NSPredicate *allButTarget = [NSPredicate predicateWithFormat:@"SELF != %@", rank];
-    [_cards filterUsingPredicate:allButTarget];
+- (void)removeThisRank:(NSString *)targetRank{
+    NSMutableArray *resulting_cards = [self.cards mutableCopy];
+    
+    for (FishCard *card in self.cards) {
+        if ([card.rank compare:targetRank] == NSOrderedSame)
+            [resulting_cards removeObject:card];
+        
+    }
+    self.cards = resulting_cards;
 }
 
 - (NSString *) toString {
     NSMutableString *result = [@"[" mutableCopy];
     
-    for (FishCard *card in _cards) {
+    for (FishCard *card in self.cards) {
         [result appendString: [card toString]];
         [result appendString:@" "];
     }

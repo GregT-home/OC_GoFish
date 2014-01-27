@@ -18,7 +18,6 @@ describe(@"GoFish Model", ^{
     __block FishHand *hand;
     __block FishCard *card;
     
-    __block NSMutableArray *cards;
     it(@".newWithEmptyHand: creates an empty hand",^{
         hand = [FishHand newWithEmptyHand];
         [[hand should] beKindOfClass:[FishHand class]];
@@ -80,14 +79,20 @@ describe(@"GoFish Model", ^{
         });
         
         it(@".giveMatchingCards: returns array of matched cards that are removed from hand", ^{
-            cards = [hand giveMatchingCards:@"5"];
+            NSLog(@"hand before giveMatchingCards:5 = %@", [hand toString]);
+            NSMutableArray *cards = [hand giveMatchingCards:@"5"];
             [[theValue([cards count]) should] equal:@4];
+            NSLog(@"hand after giveMatchingCards:5 = %@", [hand toString]);
         });
         
         it(@".giveMatchingCards: also removes the given cards from hand", ^{
+            NSLog(@"hand before 2nd giveMatchingCards:5 = %@", [hand toString]);
             [[[hand rankCount:@"10"] should] equal:@1];
-            cards = [hand giveMatchingCards:@"10"];
+            NSMutableArray *cards = [hand giveMatchingCards:@"10"];
+            NSLog(@"hand after giveMatchingCards:5 = %@", [hand toString]);
+            [[theValue([cards count]) should] equal:@1];
             [[[hand rankCount:@"10"] should] equal:@0];
+            NSLog(@"[hand rankCount:10] = %@", [hand rankCount:@"10"]);
         });
     });
     
