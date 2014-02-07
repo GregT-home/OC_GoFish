@@ -18,35 +18,43 @@ describe(@"GoFish Model", ^{
     __block FishHand *hand;
     __block FishCard *card;
     
-    it(@".newWithEmptyHand: creates an empty hand",^{
-        hand = [FishHand newWithEmptyHand];
+    it(@".new: creates an empty hand",^{
+        hand = [FishHand new];
         [[hand should] beKindOfClass:[FishHand class]];
     });
     
     it(@".numberOfCards: shows the size of the hand", ^{
-        hand = [FishHand newWithEmptyHand];
+        hand = [FishHand new];
         [[[hand numberOfCards] should] equal:@0];
     });
     
     context(@"Given a number of sample cards from NSString rank/suit names", ^{
         beforeEach(^{ // Occurs before each enclosed "it"
             deck = [FishDeck newWithCards];
-            hand = [FishHand newWithEmptyHand];
+            hand = [FishHand new];
         });
         
-        it(@".receiveCards: receives one card into a hand", ^{
-            card = [deck give_card];
+        it(@".receiveCard: receives one card into a hand", ^{
+            card = [deck giveCard];
+            [hand receiveCard:card];
+            [[[hand numberOfCards] should] equal:@1];
+            [[[deck numberOfCards] should] equal:@51];
+        });
+        
+        it(@".receiveCards: can receive one card into a hand", ^{
+            card = [deck giveCard];
             [hand receiveCards: [NSMutableArray arrayWithObjects:card, nil]];
             [[[hand numberOfCards] should] equal:@1];
+            [[[deck numberOfCards] should] equal:@51];
         });
         
         it(@".receiveCards: also receives multiple cards into a hand", ^{
-            int starting_count = [[hand numberOfCards] intValue];
+            int startingCount = [[hand numberOfCards] intValue];
             for (int i = 0; i < 7; i++) {
-                card = [deck give_card];
+                card = [deck giveCard];
                 [hand receiveCards: [NSMutableArray arrayWithObjects:card, nil]];
             }
-            [[[hand numberOfCards] should] equal:theValue(starting_count + 7)];
+            [[[hand numberOfCards] should] equal:theValue(startingCount + 7)];
         });
     });
     
@@ -54,7 +62,7 @@ describe(@"GoFish Model", ^{
     context(@"Given a hand of 4 of a kind (and 0 or more  other cards).", ^{
         beforeEach(^{
             deck = [FishDeck newWithCards];
-            hand = [FishHand newWithEmptyHand];
+            hand = [FishHand new];
             [hand receiveCards:[NSMutableArray arrayWithObjects:
                                 [FishCard newWithRank:@"5" suit:@"C"],
                                 [FishCard newWithRank:@"5" suit:@"H"],
@@ -79,26 +87,21 @@ describe(@"GoFish Model", ^{
         });
         
         it(@".giveMatchingCards: returns array of matched cards that are removed from hand", ^{
-            NSLog(@"hand before giveMatchingCards:5 = %@", [hand toString]);
             NSMutableArray *cards = [hand giveMatchingCards:@"5"];
             [[theValue([cards count]) should] equal:@4];
-            NSLog(@"hand after giveMatchingCards:5 = %@", [hand toString]);
         });
         
         it(@".giveMatchingCards: also removes the given cards from hand", ^{
-            NSLog(@"hand before 2nd giveMatchingCards:5 = %@", [hand toString]);
             [[[hand rankCount:@"10"] should] equal:@1];
             NSMutableArray *cards = [hand giveMatchingCards:@"10"];
-            NSLog(@"hand after giveMatchingCards:5 = %@", [hand toString]);
             [[theValue([cards count]) should] equal:@1];
             [[[hand rankCount:@"10"] should] equal:@0];
-            NSLog(@"[hand rankCount:10] = %@", [hand rankCount:@"10"]);
         });
     });
     
     context(@"given a hand of cards", ^{
         beforeEach(^{
-            hand = [FishHand newWithEmptyHand];
+            hand = [FishHand new];
             [hand receiveCards:[NSMutableArray arrayWithObjects:
                                 [FishCard newWithRank:@"9" suit:@"C"],
                                 [FishCard newWithRank:@"6" suit:@"H"],
@@ -109,11 +112,11 @@ describe(@"GoFish Model", ^{
         
         it(@".sort: sorts a hand", ^{
             [hand sort];
-            [[[hand toString] should] equal:@"[2-H 6-H 9-C 10-H]"];
+            [[[hand description] should] equal:@"[2-H 6-H 9-C 10-H]"];
         });
         
-        it(@"toString: returns a string representation of the card", ^{
-            NSString *string = [hand toString];
+        it(@"description: returns a string representation of the card", ^{
+            NSString *string = [hand description];
             [[string should] equal:@"[9-C 6-H 10-H 2-H]"];
         });
     }); // end context

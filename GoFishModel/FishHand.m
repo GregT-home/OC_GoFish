@@ -22,21 +22,11 @@
 
 @implementation FishHand
 
-- (instancetype)initWithEmptyHand {
+- (instancetype)init {
     self = [super init];
     if (self)
         self.cards = [NSMutableArray new];
     return self;
-}
-+ (instancetype)newWithEmptyHand {
-    return [[self alloc] initWithEmptyHand];
-}
-
-+ (instancetype)newWithStackedCards:(NSMutableArray *)stackedHandCards {
-    //    self = [[self alloc] newWithEmptyHand];
-    //  [self.cards addObjectsFromArray:stackedHandCards];
-    //return self;
-    return nil;
 }
 
 - (NSNumber *)numberOfCards {
@@ -66,6 +56,10 @@
 
 - (void)receiveCards:(NSMutableArray *)newCards{
     [self.cards addObjectsFromArray:newCards];
+}
+
+- (void)receiveCard:(FishCard *)card {
+    [self.cards addObject:card];
 }
 
 - (NSMutableArray *)giveMatchingCards:(NSString *)targetRank {
@@ -99,15 +93,14 @@
     self.cards = resulting_cards;
 }
 
-- (NSString *) toString {
-    NSMutableString *result = [@"[" mutableCopy];
-    
-    for (FishCard *card in self.cards) {
-        [result appendString: [card toString]];
-        [result appendString:@" "];
-    }
-    [result replaceCharactersInRange: NSMakeRange([result length] - 1, 1) withString:@"]"];
-    
-    return [NSString stringWithString:result];
+- (NSString *) description {
+//    for (FishCard *card in self.cards) {
+//        [result appendString: [card description]];
+//        [result appendString:@" "];
+//    }
+//    [result replaceCharactersInRange: NSMakeRange([result length] - 1, 1) withString:@"]"];
+
+    return [[@"[" stringByAppendingString:[self.cards componentsJoinedByString:@" "]] stringByAppendingString:@"]"];
 }
+
 @end

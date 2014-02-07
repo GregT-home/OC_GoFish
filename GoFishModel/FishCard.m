@@ -27,13 +27,20 @@
    return @([RANKS indexOfObject:self.rank]);
 }
 
--(NSString *) toString {
+-(NSString *) description {
     return [NSString stringWithFormat:@"%@-%@", self.rank, self.suit];
 }
 
+-(NSString *) BasicFileBaseName {
+    return [[NSString stringWithFormat:@"%@%@", self.suit, self.rank] lowercaseString];
+}
+
+-(NSString *) FancyFileBaseName {
+    return [[NSString stringWithFormat:@"%@%@", self.rank, self.suit] lowercaseString];
+}
 
 - (BOOL)isEqual:(id)object {
-   return [[self cardValue] isEqual:[object value]];
+   return [[self cardValue] isEqual:[object cardValue]];
 }
 
 /*

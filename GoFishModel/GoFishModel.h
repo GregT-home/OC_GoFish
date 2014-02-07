@@ -7,7 +7,16 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "FishCard.h"
+#import "FishDeck.h"
+#import "FishHand.h"
+#import "FishGame.h"
+#import "FishPlayer.h"
+#import "FishResult.h"
 
 @interface GoFishModel : NSObject
+
+@property (nonatomic, strong) FishDeck *pond;
+@property (nonatomic, strong) FishHand *hand;
 
 @end

@@ -11,9 +11,10 @@
 
 @interface FishDeck : NSObject
 + (instancetype)newWithCards;
++ (instancetype)newStackedDeck;
 - (NSNumber *)numberOfCards;
 - (void)shuffle;
-- (FishCard *)give_card;
-- (void)receive_card:(FishCard *)newcard;
+- (FishCard *)giveCard;
+- (void)receiveCard:(FishCard *)newcard;
 
 @end

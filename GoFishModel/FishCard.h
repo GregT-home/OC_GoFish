@@ -17,6 +17,8 @@
 + (instancetype) newWithRank:(NSString *)rank suit:(NSString *)suit;
 - (instancetype) initWithRank:(NSString *)rank suit:(NSString *)suit;
 - (NSComparisonResult) compare:(FishCard *)aCard;
-- (NSString *) toString;
+- (NSString *) description;
+- (NSString *) BasicFileBaseName;
+- (NSString *) FancyFileBaseName;
 
 @end

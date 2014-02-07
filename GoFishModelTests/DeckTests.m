@@ -32,30 +32,40 @@ describe(@"GoFish Model: Deck Class Creation and Basic Function", ^{
        });
         
         it(@"new decks have cards in the same order", ^{
+            [[[deck numberOfCards] should] equal:@52];
             [[deck should] equal:shuffledDeck];
         });
         
         it(@"shuffling should change the order", ^{
             [deck shuffle];
+            [[[shuffledDeck numberOfCards] should] equal:@52];
             [[deck shouldNot] equal:shuffledDeck];
         });
 
-        it(@".give_card gives the first card from the deck", ^{
-            int deckSize = [[deck numberOfCards] intValue];
-            FishCard *firstCard = [deck give_card];
-            [[theValue(deckSize) should] equal:theValue([[deck numberOfCards] intValue] + 1)];
+        it(@".giveCard gives the first card from the deck", ^{
+            FishCard *firstCard = [deck giveCard];
+            [[[deck numberOfCards] should] equal:@51];
             [[firstCard should] equal:[FishCard newWithRank:@"2" suit:@"C"]];
         });
-
-        it(@".receive_card puts a card at the end of the deck", ^{
-            int deck_size = [[deck numberOfCards] intValue];
-            FishCard *last_card;
-            FishCard *first_card = [deck give_card];
+        
+        it(@".giveCard gives nil when there are no more cards", ^{
+            FishCard *firstCard;
+            for (int i = 0; i < 52; i++) {
+                firstCard = [deck giveCard];
+            }
+            firstCard = [deck giveCard];
+            [[firstCard should] beNil];
+        });
+        
+        it(@".receiveCard puts a card at the end of the deck", ^{
+            int deckSize = [[deck numberOfCards] intValue];
+            FishCard *lastCard;
+            FishCard *firstCard = [deck giveCard];
             
-            [deck receive_card:first_card];
-            [[theValue(deck_size) should] equal:@52];
+            [deck receiveCard:firstCard];
+            [[theValue(deckSize) should] equal:@52];
             for (int i = 0;i < 52; i++ ){
-                last_card = [deck give_card];
+                lastCard = [deck giveCard];
             }
         });
 

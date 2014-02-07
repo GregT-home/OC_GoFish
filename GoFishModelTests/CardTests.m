@@ -51,8 +51,8 @@ describe(@"GoFish Model", ^{
             [[fiveHearts should] beGreaterThan:two];
         });
         
-        it(@"toString: returns a string representation of the card", ^{
-            NSString *string = [fiveHearts toString];
+        it(@"description: returns a string representation of the card", ^{
+            NSString *string = [fiveHearts description];
             [[string should] equal:@"5-H"];
         });
     }); // end context with sample cards

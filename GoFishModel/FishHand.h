@@ -7,15 +7,15 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "FishCard.h"
 
 @interface FishHand : NSObject
-+ (instancetype) newWithEmptyHand;
-+ (instancetype) newWithStackedCards:(NSMutableArray *)stackedHandCards;
 - (NSNumber *) numberOfCards;
 - (NSNumber *) rankCount:(NSString *)targetRank;
-- (void) receiveCards:(NSMutableArray *)cards;
+- (void) receiveCards:(NSArray *)cards;
+- (void) receiveCard:(FishCard *)card;
 - (NSMutableArray *) giveMatchingCards:(NSString *)rank;
 - (BOOL) gotBook:(NSString *)rank;
-- (NSString *) toString;
+- (NSString *) description;
 - (void) sort;
 @end
