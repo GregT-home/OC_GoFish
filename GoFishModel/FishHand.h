@@ -10,6 +10,9 @@
 #import "FishCard.h"
 
 @interface FishHand : NSObject
+
+@property (nonatomic, strong) NSMutableArray *cards;
+
 - (NSNumber *) numberOfCards;
 - (NSNumber *) rankCount:(NSString *)targetRank;
 - (void) receiveCards:(NSArray *)cards;

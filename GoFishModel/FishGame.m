@@ -16,7 +16,7 @@
     BOOL gameOver;
     NSInteger currentPlayerIndex;
     BOOL gameIsStarted;
-    FishDeck *pond;
+//    FishDeck *pond;
     BOOL stackDeck;
 }
 
@@ -41,11 +41,11 @@
 - (void) startGame {
     if (gameIsStarted) return;
     
-    pond = [FishDeck newWithCards];
-    [pond shuffle];
+    self.pond = [FishDeck newWithCards];
+    [self.pond shuffle];
     
     if (stackDeck)
-        pond = [FishDeck newStackedDeck];
+        self.pond = [FishDeck newStackedDeck];
    
     for (FishPlayer *player in self.players) {
         booksList[player.number] = [@[] mutableCopy];
@@ -69,13 +69,13 @@
     // deal cards in chunks of X to facilitate stacking
     for (FishPlayer *player in self.players) {
         for (int i = 0; i < [number intValue]; i++ ) {
-            [player.hand receiveCard:[pond giveCard]];
+            [player.hand receiveCard:[self.pond giveCard]];
         }
     }
 }
 
 - (NSNumber *) pondSize {
-    return [pond numberOfCards];
+    return [self.pond numberOfCards];
 }
 - (NSNumber *) numberOfPlayers {
     return @([self.players count]);
@@ -139,7 +139,7 @@
         result.receivedFromPlayer = true;
     }
     else {
-        FishCard *card = [pond giveCard];
+        FishCard *card = [self.pond giveCard];
         if (!card)
             // no cards, game is over.
             gameOver = result.gameOver = YES;

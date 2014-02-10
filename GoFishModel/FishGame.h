@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 //#import "GoFishModel.h"
 #import "FishPlayer.h"
+#import "FishDeck.h"
 #import "FishResult.h"
 
 
@@ -16,6 +17,7 @@
 
 @interface FishGame : NSObject
 @property (nonatomic, strong) NSArray *players;
+@property (nonatomic, strong) FishDeck *pond;
 
 - (instancetype)init;
 - (void) startGame;

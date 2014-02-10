@@ -13,7 +13,7 @@
 // declare our cards so that they are not visible, similar to an instance variable in Ruby
 // nonatomic: value can be returned without regard to multi-threading.
 // strong: use automatic reference counting (ARC) with this item.
-@property (nonatomic, strong) NSMutableArray *cards;
+//@property (nonatomic, strong) NSMutableArray *cards;
 
 // "private" method
 - (void) removeThisRank:(NSString *)rank;

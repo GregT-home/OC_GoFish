@@ -28,8 +28,9 @@
 
 - (instancetype)copyWithZone:(NSZone *)zone {
     FishPlayer *copy = [[[self class] allocWithZone: zone] init];
-//    copy setName:<#(NSString *)#>
-//    [copy setProductName:[self productName]];
+    [copy setName:[self name]];
+    [copy setNumber:[self number]];
+    [copy setHand:[self hand]];
     return copy;
 }
 
